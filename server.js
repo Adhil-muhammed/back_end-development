@@ -46,7 +46,7 @@ con.connect((err) => {
   console.log("connected");
 });
 
-// get all data
+// get all data....
 app.get("/students", (req, res, next) => {
   con.query("select * from student", async (err, result, fields) => {
     if (err) throw err;
