@@ -52,7 +52,6 @@ app.get("/students", (req, res, next) => {
     if (err) throw err;
     var data = result;
     res.json(data);
-    console.log(data);
   });
 });
 
