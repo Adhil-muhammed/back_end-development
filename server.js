@@ -14,13 +14,15 @@ app.use(jsonBodyParser);
 app.use(urlBodyParser);
 
 // helper function
-const inform = (err, res) => {
+const inform = (err, res, result) => {
   if (err) {
     return res.status(400).send({ error: "failed" });
+  } else if (result.length > 1) {
+    res.send(result);
   } else {
     return res
       .status(200)
-      .send({ error: null, status: "insertion Compleated" });
+      .send({ error: null, status: "successfully compleated" });
   }
 };
 
@@ -28,7 +30,7 @@ const inform = (err, res) => {
 
 const query = (query, data = {}, res) => {
   return con.query(query, data, (err, result) => {
-    inform(err, res);
+    inform(err, res, result);
   });
 };
 
@@ -56,7 +58,7 @@ app.get("/students", (req, res, next) => {
 // get single data
 app.get("/students/:id", (req, res, next) => {
   let { id } = req.params;
-  con.query(`select * from student WHERE id =${id}`, (err, result, fields) => {
+  con.query(`select * from student WHERE id =?`, id, (err, result, fields) => {
     if (err) throw err;
     res.json(result);
   });
@@ -78,17 +80,9 @@ app.post("/add", (req, res, next) => {
 });
 
 // delete data
-app.delete("/remove/:id", (req, res, next) => {
+app.delete("/students/:id", (req, res, next) => {
   let { id } = req.params;
-  con.query(`DELETE FROM student WHERE id =${id}`, (err, result, fields) => {
-    if (err) {
-      res.status(400);
-      res.send({ error: "delete data faild" });
-    } else {
-      res.status(200);
-      res.json({ resonse: "data removed successfully " });
-    }
-  });
+  query("DELETE FROM student WHERE id = ?", id, res);
 });
 
 // pert listen
