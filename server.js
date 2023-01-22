@@ -79,7 +79,6 @@ app.get("/student/:id", (req, res, next) => {
 app.post("/students", (req, res, next) => {
   let sql = "insert into student set ?";
   query(sql, req.body, res);
-  console.log("hghgh");
 });
 
 // update student data
