@@ -95,40 +95,9 @@ app.delete("/student/:id", (req, res, next) => {
   query(sql, id, res);
 });
 
-// get all student marks on subject
-app.get("/marks/student", (req, res, next) => {
-  let sql = "SELECT * from student JOIN marks ON student.id=marks.student_id";
-  con.query(sql, (err, result) => {
-    err
-      ? res.status(400).send({ error: err.message })
-      : res.status(200).json({
-          error: null,
-          status: "successfully compleated",
-          data: result,
-        });
-  });
-});
-
-// add mark into student
-app.post("marks/student/:studentId", (req, res) => {
-  // coming soon..........
-});
-
-// get user
-app.get("/users/:id", (req, res) => {
-  const sql = "select * from users WHERE id=?";
-  getUsers(sql, req.params.id, res);
-});
-
-// add user
-app.post("/create/users", (req, res) => {
-  // const sql = "insert into users set ?";
-  addUsers(req.body, res);
-});
-
-// get user
-app.get("/users", (req, res) => {
-  getUsers(res);
+// pert listen
+app.listen(5000, () => {
+  console.log(`server listen ${5000}`);
 });
 
 // login user
