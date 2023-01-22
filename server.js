@@ -46,7 +46,7 @@ const query = (query, data, res) => {
   });
 };
 
-// get all data....
+// get all student....
 app.get("/students", (req, res, next) => {
   con.query("select * from student", async (err, result, fields) => {
     err
@@ -61,7 +61,7 @@ app.get("/students", (req, res, next) => {
   });
 });
 
-// get single data
+// get single student
 app.get("/student/:id", (req, res, next) => {
   let { id } = req.params;
 
@@ -71,24 +71,39 @@ app.get("/student/:id", (req, res, next) => {
   });
 });
 
-// post data
+// post student data
 app.post("/add", (req, res, next) => {
   let sql = "insert into student set ?";
   query(sql, req.body, res);
 });
 
-// update data
+// update student data
 app.patch("/student/:id", (req, res, next) => {
   let { id } = req.params;
   let sql = `UPDATE student set ? WHERE id=?`;
   query(sql, [req.body, id], res);
 });
 
-// delete data
+// delete student
 app.delete("/student/:id", (req, res, next) => {
   let { id } = req.params;
   let sql = `DELETE FROM student WHERE id =?`;
   query(sql, id, res);
+});
+
+// get student marks on subject
+app.get("/marks", (req, res, next) => {
+  let sql = "SELECT * from student JOIN marks ON student.id=marks.student_id";
+  con.query(sql, (err, result) => {
+    console.log(result);
+    err
+      ? res.status(400).send({ error: err.message })
+      : res.status(200).json({
+          error: null,
+          status: "successfully compleated",
+          data: result,
+        });
+  });
 });
 
 // pert listen
