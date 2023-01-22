@@ -73,22 +73,21 @@ app.get("/student/:id", (req, res, next) => {
 
 // post data
 app.post("/add", (req, res, next) => {
-  let sql = `insert into student set first_name = '${first_name}' 
-  , current_location='${current_location}',pinCode='${pinCode}',city='${city}'`;
-
   let { first_name, current_location, pinCode, city } = req.body;
+
+  let sql = `insert into student set first_name = '${first_name}' 
+  , current_location='${current_location}',pinCode=${pinCode},city='${city}'`;
 
   query(sql, res);
 });
 
 // update data
 app.patch("/student/:id", (req, res, next) => {
+  let { id } = req.params;
+  let { first_name, current_location, pinCode, city } = req.body;
   let sql = `UPDATE student set first_name= '${first_name}'
   ,current_location='${current_location}'
   ,pinCode=${pinCode},city='${city}'  WHERE id=${id}`;
-
-  let { id } = req.params;
-  let { first_name, current_location, pinCode, city } = req.body;
 
   query(sql, res);
 });
