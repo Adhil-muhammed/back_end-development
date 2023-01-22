@@ -15,16 +15,21 @@ var con = mysql.createConnection({
   database: "db",
 });
 
+con.connect((err) => {
+  if (err) console.log(err);
+  console.log("connected");
+});
+
 // middileWare
 app.use(cors());
 app.use(jsonBodyParser);
 app.use(urlBodyParser);
 
-// helper function
+// get reponce
 const inform = (err, res, result) => {
   if (err) {
     console.log(err);
-    return res.status(400).send({ error: "failed" });
+    return res.status(400).send({ error: "failed", message: err.message });
   } else if (result.length > 1) {
     res.send(result);
   } else {
@@ -35,16 +40,11 @@ const inform = (err, res, result) => {
 };
 
 // query function
-const query = (query, res) => {
-  return con.query(query, (err, result) => {
+const query = (query, data, res) => {
+  return con.query(query, data, (err, result) => {
     inform(err, res, result);
   });
 };
-
-con.connect((err) => {
-  if (err) console.log(err);
-  console.log("connected");
-});
 
 // get all data....
 app.get("/students", (req, res, next) => {
@@ -73,30 +73,22 @@ app.get("/student/:id", (req, res, next) => {
 
 // post data
 app.post("/add", (req, res, next) => {
-  let { first_name, current_location, pinCode, city } = req.body;
-
-  let sql = `insert into student set first_name = '${first_name}' 
-  , current_location='${current_location}',pinCode=${pinCode},city='${city}'`;
-
-  query(sql, res);
+  let sql = "insert into student set ?";
+  query(sql, req.body, res);
 });
 
 // update data
 app.patch("/student/:id", (req, res, next) => {
   let { id } = req.params;
-  let { first_name, current_location, pinCode, city } = req.body;
-  let sql = `UPDATE student set first_name= '${first_name}'
-  ,current_location='${current_location}'
-  ,pinCode=${pinCode},city='${city}'  WHERE id=${id}`;
-
-  query(sql, res);
+  let sql = `UPDATE student set ? WHERE id=?`;
+  query(sql, [req.body, id], res);
 });
 
 // delete data
 app.delete("/student/:id", (req, res, next) => {
   let { id } = req.params;
-
-  query(`DELETE FROM student WHERE id =${id}`, res);
+  let sql = `DELETE FROM student WHERE id =?`;
+  query(sql, id, res);
 });
 
 // pert listen
