@@ -1,7 +1,6 @@
 {
   "name": "fahad",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "nodemon server.js"
@@ -17,5 +16,14 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Adhil-muhammed/back_end-development.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Adhil-muhammed/back_end-development/issues"
+  },
+  "homepage": "https://github.com/Adhil-muhammed/back_end-development#readme",
+  "description": ""
 }
