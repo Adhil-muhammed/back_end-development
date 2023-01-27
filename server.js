@@ -1,10 +1,7 @@
-const express = require("express");
-const mysql = require("mysql2");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-
-// imports
-const register = require("./Auth/auth.js");
+import express from "express";
+import mysql from "mysql2";
+import bodyParser from "body-parser";
+import cors from "cors";
 
 const app = express();
 
