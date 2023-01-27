@@ -3,6 +3,9 @@ const mysql = require("mysql2");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
+// imports
+const register = require("./Auth/auth.js");
+
 const app = express();
 
 const jsonBodyParser = bodyParser.json();
@@ -114,4 +117,10 @@ app.post("marks/student/:studentId", (req, res) => {
 // pert listen
 app.listen(5000, () => {
   console.log(`server listen ${5000}`);
+});
+
+// registration
+app.post("/create/users", (req, res) => {
+  const sql = "insert into users set ?";
+  query(sql, req.body, res);
 });
