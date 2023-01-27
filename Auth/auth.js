@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { con } from "../server.js";
 import bcrypt from "bcrypt";
 
@@ -48,3 +49,15 @@ export const login = async (req, res) => {
     }
   });
 };
+=======
+// const app = require("express");
+// const query = require("../server.js");
+
+// const register = (req, res) => {
+//   console.log(req);
+//   const sql = "insert into table users value set (?)";
+//   query(sql, [req.body], res);
+// };
+
+// module.exports = register();
+>>>>>>> 3dc73c5 (create registration api)
