@@ -3,10 +3,10 @@ import bcrypt from "bcrypt";
 
 export const addUsers = (data, res) => {
   const { user_name, password, gender } = data;
-  console.log("password", password);
   const sql = "insert into users set ?";
   let salt = bcrypt.genSaltSync(10);
   let hash = bcrypt.hashSync(password, salt);
+
   con.query(sql, { user_name, password: hash, gender }, (err, result) => {
     if (err) {
       res.status(400).send({ error: err.message });
@@ -28,6 +28,7 @@ export const getUsers = (res) => {
     }
   });
 };
+
 export const login = async (req, res) => {
   let { user_name, password } = req.body;
   let sql = `select * from  users WHERE user_name= '${user_name}'`;
