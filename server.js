@@ -2,6 +2,7 @@ import express from "express";
 import mysql from "mysql2";
 import bodyParser from "body-parser";
 import cors from "cors";
+import { getUsers } from "./Auth/auth.js";
 
 const app = express();
 
@@ -20,6 +21,11 @@ con.connect((err) => {
   console.log("connected");
 });
 
+// port listen
+app.listen(5000, () => {
+  console.log(`server listen ${5000}`);
+});
+
 // middileWare
 app.use(cors());
 app.use(jsonBodyParser);
@@ -30,17 +36,15 @@ const inform = (err, res, result) => {
   if (err) {
     console.log(err);
     return res.status(400).send({ error: "failed", message: err.message });
-  } else if (result.length > 1) {
-    res.send(result);
+  } else if (result.length === 0 || result.affectedRows === 0) {
+    res.send({ result: [] });
   } else {
-    return res
-      .status(200)
-      .send({ error: null, status: "successfully compleated" });
+    return res.status(200).send({ error: null, data: result });
   }
 };
 
 // query function
-const query = (query, data, res) => {
+export const query = (query, data, res) => {
   return con.query(query, data, (err, result) => {
     inform(err, res, result);
   });
@@ -72,7 +76,7 @@ app.get("/student/:id", (req, res, next) => {
 });
 
 // post student data
-app.post("/add", (req, res, next) => {
+app.post("/students", (req, res, next) => {
   let sql = "insert into student set ?";
   query(sql, req.body, res);
 });
@@ -95,7 +99,6 @@ app.delete("/student/:id", (req, res, next) => {
 app.get("/marks/student", (req, res, next) => {
   let sql = "SELECT * from student JOIN marks ON student.id=marks.student_id";
   con.query(sql, (err, result) => {
-    console.log(result);
     err
       ? res.status(400).send({ error: err.message })
       : res.status(200).json({
@@ -111,12 +114,13 @@ app.post("marks/student/:studentId", (req, res) => {
   // coming soon..........
 });
 
-// pert listen
-app.listen(5000, () => {
-  console.log(`server listen ${5000}`);
+// get user
+app.get("/users/:id", (req, res) => {
+  const sql = "select * from users WHERE id=?";
+  getUsers(sql, req.params.id, res);
 });
 
-// registration
+// add user
 app.post("/create/users", (req, res) => {
   const sql = "insert into users set ?";
   query(sql, req.body, res);
