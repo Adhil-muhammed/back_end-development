@@ -120,5 +120,19 @@ app.get("/users/:id", (req, res) => {
   getUsers(sql, req.params.id, res);
 });
 
+<<<<<<< HEAD
+=======
+// add user
+app.post("/create/users", (req, res) => {
+  // const sql = "insert into users set ?";
+  addUsers(req.body, res);
+});
+
+// get user
+app.get("/users", (req, res) => {
+  getUsers(res);
+});
+
+>>>>>>> 21d7caa (create login & registration api)
 // login user
 app.post("/login", (req, res) => login(req, res));
