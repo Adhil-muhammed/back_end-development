@@ -99,7 +99,6 @@ app.delete("/student/:id", (req, res, next) => {
 app.get("/marks/student", (req, res, next) => {
   let sql = "SELECT * from student JOIN marks ON student.id=marks.student_id";
   con.query(sql, (err, result) => {
-    console.log(result);
     err
       ? res.status(400).send({ error: err.message })
       : res.status(200).json({
@@ -115,9 +114,10 @@ app.post("marks/student/:studentId", (req, res) => {
   // coming soon..........
 });
 
-// pert listen
-app.listen(5000, () => {
-  console.log(`server listen ${5000}`);
+// get user
+app.get("/users/:id", (req, res) => {
+  const sql = "select * from users WHERE id=?";
+  getUsers(sql, req.params.id, res);
 });
 
 // login user
