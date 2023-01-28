@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { con } from "../server.js";
 import bcrypt from "bcrypt";
 
@@ -61,3 +62,10 @@ export const login = async (req, res) => {
 
 // module.exports = register();
 >>>>>>> 3dc73c5 (create registration api)
+=======
+import { query } from "../server.js";
+
+export const getUsers = (sql, data, res) => {
+  query(sql, data, res);
+};
+>>>>>>> ce9e752 (change condition & create new api)
