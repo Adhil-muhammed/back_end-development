@@ -2,14 +2,14 @@ import express from "express";
 import mysql from "mysql2";
 import bodyParser from "body-parser";
 import cors from "cors";
-import { getUsers } from "./Auth/auth.js";
+import { addUsers, getUsers, login } from "./Auth/auth.js";
 
 const app = express();
 
 const jsonBodyParser = bodyParser.json();
 const urlBodyParser = bodyParser.urlencoded({ extended: false });
 
-var con = mysql.createConnection({
+export var con = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "Adhil@123",
@@ -122,6 +122,14 @@ app.get("/users/:id", (req, res) => {
 
 // add user
 app.post("/create/users", (req, res) => {
-  const sql = "insert into users set ?";
-  query(sql, req.body, res);
+  // const sql = "insert into users set ?";
+  addUsers(req.body, res);
 });
+
+// get user
+app.get("/users", (req, res) => {
+  getUsers(res);
+});
+
+// login user
+app.post("/login", (req, res) => login(req, res));
