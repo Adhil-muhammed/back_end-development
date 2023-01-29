@@ -1,5 +1,3 @@
-ssimport { query } from "../server.js";
-
 import { con } from "../server.js";
 import bcrypt from "bcrypt";
 
