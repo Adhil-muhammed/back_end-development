@@ -13,6 +13,7 @@ export const addUsers = (data, res) => {
       res.status(400).send({ error: err.message });
     }
   });
+
   con.query(sql1, user_name, (err, result) => {
     if (err) {
       console.log("err", err);
@@ -25,6 +26,7 @@ export const addUsers = (data, res) => {
 
 export const getUsers = (res) => {
   const sql = "select * from  users";
+
   con.query(sql, (err, result) => {
     if (err) {
       res.status(400).send({ error: err.message });
