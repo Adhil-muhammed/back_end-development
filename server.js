@@ -119,6 +119,11 @@ app.get("/users/:id", (req, res) => {
   const sql = "select * from users WHERE id=?";
   getUsers(sql, req.params.id, res);
 });
+// create user
+app.post("/create/users", (req, res) => {
+  // const sql = "insert into users set ?";
+  addUsers(req.body, res);
+});
 
 // login user
 app.post("/login", (req, res) => login(req, res));
