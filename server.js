@@ -37,7 +37,7 @@ const inform = (err, res, result) => {
     console.log(err);
     return res.status(400).send({ error: "failed", message: err.message });
   } else if (result.length === 0 || result.affectedRows === 0) {
-    res.send({ result: [] });
+    res.status(406).send({ result: "data doesn't exist" });
   } else {
     return res.status(200).send({ error: null, data: result });
   }
