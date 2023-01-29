@@ -4,16 +4,21 @@ import bcrypt from "bcrypt";
 export const addUsers = (data, res) => {
   const { user_name, password, gender } = data;
   const sql = "insert into users set ?";
+  const sql1 = "select * from users where user_name= ? ";
   let salt = bcrypt.genSaltSync(10);
   let hash = bcrypt.hashSync(password, salt);
 
   con.query(sql, { user_name, password: hash, gender }, (err, result) => {
     if (err) {
       res.status(400).send({ error: err.message });
-    } else if (result.affectedRows === 0) {
-      res.status(200).send({ error: null, data: [] });
+    }
+  });
+  con.query(sql1, user_name, (err, result) => {
+    if (err) {
+      console.log("err", err);
+      res.status(400).send({ message: "error occured" });
     } else {
-      res.status(200).send({ error: null, user_id: result.insertId });
+      res.send(result);
     }
   });
 };

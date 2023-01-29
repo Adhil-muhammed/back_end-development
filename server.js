@@ -115,15 +115,10 @@ app.post("marks/student/:studentId", (req, res) => {
 });
 
 // get user
-app.get("/users/:id", (req, res) => {
-  const sql = "select * from users WHERE id=?";
-  getUsers(sql, req.params.id, res);
-});
+app.get("/users", (res) => getUsers(res));
+
 // create user
-app.post("/create/users", (req, res) => {
-  // const sql = "insert into users set ?";
-  addUsers(req.body, res);
-});
+app.post("/create/users", (req, res) => addUsers(req.body, res));
 
 // login user
 app.post("/login", (req, res) => login(req, res));
