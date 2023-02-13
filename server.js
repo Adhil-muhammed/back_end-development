@@ -78,6 +78,7 @@ app.get("/student/:id", (req, res, next) => {
 // post student data
 app.post("/students", (req, res, next) => {
   let sql = "insert into student set ?";
+
   query(sql, req.body, res);
 });
 
@@ -85,6 +86,7 @@ app.post("/students", (req, res, next) => {
 app.patch("/student/:id", (req, res, next) => {
   let { id } = req.params;
   let sql = `UPDATE student set ? WHERE id=?`;
+
   query(sql, [req.body, id], res);
 });
 
@@ -92,12 +94,14 @@ app.patch("/student/:id", (req, res, next) => {
 app.delete("/student/:id", (req, res, next) => {
   let { id } = req.params;
   let sql = `DELETE FROM student WHERE id =?`;
+
   query(sql, id, res);
 });
 
 // get all student marks on subject
 app.get("/marks/student", (req, res, next) => {
   let sql = "SELECT * from student JOIN marks ON student.id=marks.student_id";
+
   con.query(sql, (err, result) => {
     err
       ? res.status(400).send({ error: err.message })
