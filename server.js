@@ -75,6 +75,10 @@ app.get("/student/:id", (req, res, next) => {
   });
 });
 
+app.get("/", (req, res, next) => {
+  res.send("adhil");
+});
+
 // post student data
 app.post("/students", (req, res, next) => {
   let sql = "insert into student set ?";
