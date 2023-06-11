@@ -68,7 +68,6 @@ app.get("/students", (req, res, next) => {
 // get single student
 app.get("/student/:id", (req, res, next) => {
   let { id } = req.params;
-
   con.query(`select * from student WHERE id =?`, id, (err, result, fields) => {
     if (err) throw err;
     res.json(result);
